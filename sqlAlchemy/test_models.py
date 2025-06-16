@@ -55,3 +55,5 @@ for vente in ventes_hommes:
 # %%
 # Fermer la session de base de données
 db.close()
+
+# %%
