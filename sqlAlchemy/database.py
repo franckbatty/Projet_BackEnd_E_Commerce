@@ -21,9 +21,9 @@ sessionLocal1 = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base() 
 
 # Verifier la connexion à la base de données
-if __name__ == "__main__":
-     try:
-         with engine.connect() as conn:
-             print("Connexion à la database réussie")
-     except Exception as e:
-         print(f"Erreur de connexion à la database : {e}")
+#if __name__ == "__main__":
+#     try:
+#         with engine.connect() as conn:
+#             print("Connexion à la database réussie")
+#     except Exception as e:
+#         print(f"Erreur de connexion à la database : {e}") 
