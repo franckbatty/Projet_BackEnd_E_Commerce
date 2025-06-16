@@ -1,5 +1,5 @@
 """SQLAlchemy models"""
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship # permet des relations de clé étrangère entre les tables.
 from database import Base
 
@@ -7,7 +7,10 @@ from database import Base
 # Table de Fait : Vente
 class VenteFait(Base):
     __tablename__ = "fait_ventes_aggregees" # Nom de la table dans la base de données
-    __table_args__ = {"schema": "e_commerce_couche_gold"} # Nom du schéma 
+    __table_args__ = (
+        PrimaryKeyConstraint('id_commande', 'id_client', 'id_produit'), # Clé primaire composée de ces trois colonnes
+        {"schema": "e_commerce_couche_gold"},
+    ) # Nom du schéma  
     id_commande = Column(Integer, ForeignKey("e_commerce_couche_gold.dim_commande.id_commande"))
     id_client = Column(Integer, ForeignKey("e_commerce_couche_gold.dim_client.id_client"))
     id_produit = Column(Integer, ForeignKey("e_commerce_couche_gold.dim_produit.id_produit"))   
@@ -26,7 +29,7 @@ class VenteFait(Base):
 # Table de Dimension : Client
 class ClientDim(Base):
     __tablename__ = "dim_client" # Nom de la table dans la base de données
-    __table_args__ = {"schema": "e_commerce_couche_gold"} # Nom du schéma 
+    __table_args__ = ({"schema": "e_commerce_couche_gold"},) # Nom du schéma 
     id_client = Column(Integer, primary_key=True)
     nom = Column(String)
     prenom = Column(String)
@@ -42,7 +45,7 @@ class ClientDim(Base):
 # Table de Dimension : Produit
 class ProduitDim(Base):
     __tablename__ = "dim_produit" # Nom de la table dans la base de données
-    __table_args__ = {"schema": "e_commerce_couche_gold"} # Nom du schéma 
+    __table_args__ = ({"schema": "e_commerce_couche_gold"},) # Nom du schéma 
     id_produit = Column(Integer, primary_key=True)
     nom = Column(String)
     categorie = Column(String)
@@ -53,12 +56,12 @@ class ProduitDim(Base):
 # Table de Dimension : Commande
 class CommandeDim(Base):
     __tablename__ = "dim_commande" # Nom de la table dans la base de données
-    __table_args__ = {"schema": "e_commerce_couche_gold"} # Nom du schéma 
+    __table_args__ = ({"schema": "e_commerce_couche_gold"},) # Nom du schéma 
     id_commande = Column(Integer, primary_key=True)
     date_commande = Column(String)  # Utilisation de String pour stocker la date au format ISO, c'est-à-dire 'YYYY-MM-DD'
-    statut = Column(String)
+    statut = Column(String) 
 
-    # Relation
+    # Relation 
     ventes = relationship("VenteFait", back_populates="commande") 
 
     

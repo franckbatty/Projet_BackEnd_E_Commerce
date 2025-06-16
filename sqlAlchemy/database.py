@@ -15,7 +15,7 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:frenecker@localhost/airflow_db
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # Définir SessionLocal, qui permet de créer des sessions pour interagir avec la base de données.
-sessionLocal1 = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Définir Base, qui servira de classe de base pour nos modèles SQLAlchemy.
 Base = declarative_base() 
