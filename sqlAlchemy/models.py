@@ -21,7 +21,7 @@ class VenteFait(Base):
 
     # bak_populates="ventes" est utilisé pour établir une relation bidirectionnelle entre les tables. 
     
-    # cascade="all, delete", pas besoin car l'API Restful sera juste en lecture seule, donc pas de suppression de données.
+    # cascade="all, delete", pas besoin car notre API Restful sera juste en lecture seule, donc pas de suppression de données.
 
 # Table de Dimension : Client
 class ClientDim(Base):
