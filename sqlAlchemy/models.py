@@ -15,7 +15,7 @@ class VenteFait(Base):
     id_client = Column(Integer, ForeignKey("e_commerce_couche_gold.dim_client.id_client"))
     id_produit = Column(Integer, ForeignKey("e_commerce_couche_gold.dim_produit.id_produit"))   
     quantite_totale = Column(Integer)
-    vente_totale = Column(Float)
+    vente_totale = Column(Float) 
     
     # Relations
     client = relationship("ClientDim", back_populates="ventes")

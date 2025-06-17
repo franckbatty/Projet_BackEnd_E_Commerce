@@ -120,18 +120,19 @@ def get_commandes(
 
 # Requete Analytique
 # Recuperer le nombre total de ventes
-def get_total_ventes(db: Session):
+def get_total_ventes(db: Session): 
     """Récupère le nombre total de ventes."""
     return db.query(models.VenteFait).count()
 # Recuperer le total de clients
-def get_total_clients(db: Session):
+def get_total_clients(db: Session): 
     """Récupère le nombre total de clients."""
     return db.query(models.ClientDim).count()
 # Recuperer le total de produits
-def get_total_produits(db: Session):
+def get_total_produits(db: Session): 
     """Récupère le nombre total de produits."""
     return db.query(models.ProduitDim).count()
 # Recuperer le total de commandes
-def get_total_commandes(db: Session):
+def get_total_commandes(db: Session): 
     """Récupère le nombre total de commandes."""
     return db.query(models.CommandeDim).count()
+
