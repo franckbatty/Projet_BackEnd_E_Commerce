@@ -7,7 +7,7 @@ from query_helpers import *
 
 
 # Créer une session
-db = SessionLocal()
+db = SessionLocal() 
 
 # Tester la recuperation d'une vente
 #vente = get_vente(db, id_commande=9, id_client=9, id_produit=9)
