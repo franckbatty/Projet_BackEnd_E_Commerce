@@ -49,3 +49,12 @@ class CommandeDimBase(BaseModel):
     class Config:
         orm_mode = True  # Permet à Pydantic de lire les données des objets ORM 
 
+class Analytics(BaseModel):
+    ventes_count: int
+    clients_count: int
+    produits_count: int
+    commandes_count: int
+
+    class Config:
+        orm_mode = True
+
