@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from database import SessionLocal
 import query_helpers as helpers 
-import schemas
+import schemas 
 
 api_description = """ 
 Bienvenue dans l'API E-commerce 
@@ -22,8 +22,8 @@ ainsi que des statistiques consolidées, à travers des endpoints simples, docum
 - Rechercher une vente par ID commande, ID client, et ID produit
 - Lister toutes les ventes avec filtres (id_client, id_produit, id_commande.)
 - Lister un ou plusieurs clients
--Lister un produit ou plusieurs produits et leurs catégories
--Lister une ou plusieurs commandes 
+- Lister un produit ou plusieurs produits et leurs catégories
+- Lister une ou plusieurs commandes 
 - Voir des statistiques globales sur la base
 
 Tous les endpoints supportent la pagination (`skip`, `limit`) et des filtres optionnels selon les cas.
