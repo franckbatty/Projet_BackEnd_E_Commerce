@@ -5,6 +5,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session 
 from typing import List, Optional
 from database import SessionLocal
+from fastapi.requests import Request
 import query_helpers as helpers 
 import schemas 
 
@@ -40,6 +41,16 @@ app = FastAPI(
     description = api_description,
     version = "0.1"
 )
+
+# Middleware global pour capturer toute exception non gérée dans l'API
+# Cela permet d'éviter une erreur 500 silencieuse et de renvoyer un message d'erreur lisible dans Swagger et les logs Render
+@app.middleware("http") 
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        print("🔥 ERREUR GLOBALE :", e)
+        return JSONResponse(status_code=500, content={"detail": str(e)})
 
 # --- Dépendance pour la session de base de données ---
 def get_db():
