@@ -4,8 +4,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Query, Path 
 from sqlalchemy.orm import Session 
 from typing import List, Optional
-from database import SessionLocal
-from pydantic import BaseModel
+from database import SessionLocal 
 import query_helpers as helpers 
 import schemas 
 
