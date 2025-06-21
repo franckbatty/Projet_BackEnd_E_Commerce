@@ -7,9 +7,12 @@
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import declarative_base 
 from sqlalchemy.orm import sessionmaker 
+import os
 
-# f'postgresql://<username>:<password>@<host>/<database_name>'
-SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:frenecker@localhost/airflow_db"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not SQLALCHEMY_DATABASE_URL:
+    raise Exception("La variable DATABASE_URL n'est pas définie !")
 
 # Créer un moteur de base de données (engine) qui établit la connexion avec notre base PostgreSQL.
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
