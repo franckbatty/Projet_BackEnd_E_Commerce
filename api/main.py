@@ -5,7 +5,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session 
 from typing import List, Optional
 from database import SessionLocal
-from fastapi.requests import Request
+from pydantic import BaseModel
 import query_helpers as helpers 
 import schemas 
 
@@ -41,17 +41,6 @@ app = FastAPI(
     description = api_description,
     version = "0.1"
 )
-
-# Middleware global pour capturer toute exception non gérée dans l'API
-# Cela permet d'éviter une erreur 500 silencieuse et de renvoyer un message d'erreur lisible dans Swagger et les logs Render
-@app.middleware("http") 
-async def catch_exceptions_middleware(request: Request, call_next):
-    try:
-        return await call_next(request)
-    except Exception as e:
-        print("🔥 ERREUR GLOBALE :", e)
-        return JSONResponse(status_code=500, content={"detail": str(e)})
-
 # --- Dépendance pour la session de base de données ---
 def get_db():
     db = SessionLocal()
@@ -86,7 +75,8 @@ def lire_vente(id_commande: int,id_client: int,id_produit: int,db: Session = Dep
     vente = helpers.get_vente(db, id_commande, id_client, id_produit)
     if not vente:
         raise HTTPException(status_code=404, detail="Vente introuvable.")
-    return vente
+    return schemas.VenteFaitBase.from_orm(vente)
+
 
 # Endpoint pour obtenir la liste de vente.
 @app.get(
@@ -106,7 +96,8 @@ def liste_ventes(
     db: Session = Depends(get_db)
 ):
     ventes = helpers.get_ventes(db, skip=skip, limit=limit, id_commande=id_commande, id_client=id_client,id_produit=id_produit)
-    return ventes
+    return [schemas.VenteFaitBase.from_orm(v) for v in ventes]
+
 
 # Endpoint pour obtenir un client par son ID.
 @app.get(
@@ -121,7 +112,8 @@ def lire_client(id_client: int, db: Session = Depends(get_db)):
     client = helpers.get_client(db, id_client)
     if not client:
         raise HTTPException(status_code=404, detail="Client introuvable.")
-    return client
+    return schemas.ClientDimBase.from_orm(client)
+
 
 # Endpoint pour obtenir la liste des clients.
 @app.get(
@@ -140,7 +132,8 @@ def liste_clients(
     db: Session = Depends(get_db)
 ):
     clients = helpers.get_clients(db, skip=skip, limit=limit, nom=nom, prenom=prenom)
-    return clients
+    return [schemas.ClientDimBase.from_orm(c) for c in clients]
+
 
 # Endpoint pour obtenir un produit par son ID
 @app.get(
@@ -155,7 +148,8 @@ def lire_produit(id_produit: int, db: Session = Depends(get_db)):
     produit = helpers.get_produit(db, id_produit)
     if not produit:
         raise HTTPException(status_code=404, detail="produit introuvable.")
-    return produit
+    return schemas.ProduitDimBase.from_orm(produit)
+
 
 # Endpoint pour obtenir la liste des produits 
 @app.get(
@@ -174,7 +168,8 @@ def liste_produits(
     db: Session = Depends(get_db)
 ):
     produits = helpers.get_produits(db, skip=skip, limit=limit, nom=nom, categorie=categorie)
-    return produits 
+    return [schemas.ProduitDimBase.from_orm(p) for p in produits]
+ 
 
 # Endpoint pour obtenir une commande par son ID.
 @app.get(
@@ -189,7 +184,8 @@ def lire_commande(id_commande: int, db: Session = Depends(get_db)):
     commande = helpers.get_commande(db, id_commande)
     if not commande:
         raise HTTPException(status_code=404, detail="commande introuvable.")
-    return commande
+    return schemas.CommandeDimBase.from_orm(commande)
+
 
 # Endpoint pour obtenir la liste de commande.
 @app.get(
@@ -208,7 +204,8 @@ def liste_commandes(
     db: Session = Depends(get_db)
 ):
     commandes = helpers.get_commandes(db, skip=skip, limit=limit, date_commande=date_commande, statut=statut)
-    return commandes 
+    return [schemas.CommandeDimBase.from_orm(c) for c in commandes]
+ 
 
 # Endpoint pour obtenir des statistiques sur la base de données
 @app.get(
@@ -232,8 +229,8 @@ def get_analytics(db: Session = Depends(get_db)):
     commandes_count = helpers.get_total_commandes(db)
 
     return schemas.Analytics(
-        ventes_count=ventes_count,
-        clients_count=clients_count,
-        produits_count=produits_count,
-        commandes_count=commandes_count
+    ventes_count=ventes_count,
+    clients_count=clients_count,
+    produits_count=produits_count,
+    commandes_count=commandes_count
     )
