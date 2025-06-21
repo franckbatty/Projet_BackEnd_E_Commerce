@@ -16,7 +16,7 @@ class VenteFaitBase(BaseModel):
     vente_totale: float
 
     class Config:
-        orm_mode = True  # Permet à Pydantic de lire les données des objets ORM
+        from_attributes  = True  # Permet à Pydantic de lire les données des objets ORM
 
 # --- Modèle de sortie pour les clients ---
 class ClientDimBase(BaseModel):
@@ -29,7 +29,7 @@ class ClientDimBase(BaseModel):
     adresse: str
 
     class Config:
-        orm_mode = True # Permet à Pydantic de lire les données des objets ORM
+        from_attributes  = True # Permet à Pydantic de lire les données des objets ORM
 
 # --- Modèle de sortie pour les produits ---
 class ProduitDimBase(BaseModel):
@@ -38,7 +38,7 @@ class ProduitDimBase(BaseModel):
     categorie: str
 
     class Config:
-        orm_mode = True  # Permet à Pydantic de lire les données des objets ORM
+        from_attributes  = True  # Permet à Pydantic de lire les données des objets ORM
 
 # --- Modèle de sortie pour les commandes ---
 class CommandeDimBase(BaseModel):
@@ -47,7 +47,7 @@ class CommandeDimBase(BaseModel):
     statut: str
 
     class Config:
-        orm_mode = True  # Permet à Pydantic de lire les données des objets ORM 
+        from_attributes  = True  # Permet à Pydantic de lire les données des objets ORM 
 
 class Analytics(BaseModel):
     ventes_count: int
@@ -56,5 +56,5 @@ class Analytics(BaseModel):
     commandes_count: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
 
