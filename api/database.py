@@ -7,12 +7,15 @@
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import declarative_base 
 from sqlalchemy.orm import sessionmaker 
+from dotenv import load_dotenv
 import os
 
-# 🔐 Chargement sécurisé de l’URL de connexion à la base de données
+
+load_dotenv()  # Charge les variables depuis le fichier .env
+
+# Chargement sécurisé de l’URL de connexion à la base de données
 # Cette variable DATABASE_URL doit être définie dans l’environnement (ex: Render ou .env local)
 # On lève une exception explicite si elle est absente pour éviter une connexion invalide
-
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not SQLALCHEMY_DATABASE_URL:
