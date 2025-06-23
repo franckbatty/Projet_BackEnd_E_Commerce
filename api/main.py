@@ -233,20 +233,4 @@ def get_analytics(db: Session = Depends(get_db)):
     produits_count=produits_count,
     commandes_count=commandes_count
     )
-
-# Liste de tous les endpoints qui retournent la liste des données pour faciliter
-# la tache aux data analyst de recuperer tous les endpoints.
-@app.get(
-    "/data/endpoints",
-    summary="Lister tous les endpoints disponibles",
-    description="Fournit une liste structurée de tous les endpoints publics de l’API pour faciliter la découverte.",
-    tags=["documentation"]
-)
-def list_data_endpoints():
-    return [
-        {"name": "Ventes", "url": "/ventes", "description": "Toutes les ventes avec filtres et pagination"},
-        {"name": "Clients", "url": "/clients", "description": "Tous les clients"},
-        {"name": "Produits", "url": "/produits", "description": "Liste des produits"},
-        {"name": "Commandes", "url": "/commandes", "description": "Liste des commandes"},
-        {"name": "Statistiques", "url": "/analytics", "description": "Indicateurs globaux"}
-    ]
+ 
