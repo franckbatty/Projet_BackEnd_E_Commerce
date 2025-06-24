@@ -33,14 +33,14 @@ class E_commerceConfig:
         """
 
         self.e_commerce_base_url = e_commerce_base_url or os.getenv("e_commerce_API_BASE_URL")
-        print(f"e_commerce_API_BASE_URL in e_commerceConfig init: {self.e_commerce_base_url}")  
+        print(f"Initialisation de e_commerceConfig : URL de base = {self.e_commerce_base_url}")  
 
         if not self.e_commerce_base_url:
-            raise ValueError("L'URL de base est requise. Définissez la variable d'environnement e_commerce_API_BASE_URL.")
+            raise ValueError("L'URL de base n'a pas été fournie. Veuillez définir la variable d'environnement e_commerce_API_BASE_URL.")
 
         self.e_commerce_backoff = backoff
         self.e_commerce_backoff_max_time = backoff_max_time
 
     def __str__(self):
-        """Fonction Stringify pour renvoyer le contenu de l'objet de configuration pour la journalisation"""
+        """Retourne une représentation lisible de la configuration e-commerce (utile pour les logs)."""
         return f"{self.e_commerce_base_url} {self.e_commerce_backoff} {self.e_commerce_backoff_max_time}"
