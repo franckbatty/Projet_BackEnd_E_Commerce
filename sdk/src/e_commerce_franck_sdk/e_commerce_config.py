@@ -15,7 +15,7 @@ class E_commerceConfig:
 
     def __init__(
         self,
-        e_commerce_base_base_url: str = None,
+        e_commerce_base_url: str = None,
         backoff: bool = True,
         backoff_max_time: int = 30,
     ):
