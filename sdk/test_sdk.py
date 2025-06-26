@@ -40,7 +40,8 @@ print(client1)
 # Liste les clients avec pagination et possibilité de filtrer par nom et prénom.
 clients = client.list_clients(output_format="pandas")
 print("Listes des clients :")
-print(clients)
+#print(clients)
+print(clients.shape)
 
 #%%
 # Récupère un produit par son ID.
@@ -67,17 +68,6 @@ commandes = client.list_commandes(output_format="pandas")
 print(commandes.tail())
 
 #%%
-# Récupère les statistiques globales (total clients, ventes, etc.).
-statistique = client.get_analytics()
-
-
-
-
-
-
-
-
-
-
-
-# %%
+# Récupère les statistiques globales de toutes mes bases (total clients, ventes, etc.).
+statistique = client.get_analytics() 
+print(statistique)
